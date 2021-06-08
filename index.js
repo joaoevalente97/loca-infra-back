@@ -6,7 +6,7 @@ const InicializaMongoServer = require('./config/db')
 const rotasItem = require('./routes/Item')
 const rotasLocacao = require('./routes/Locacao')
 
-//Inicializamos o servidor MongoDB
+//Inicializa o servidor MongoDB
 InicializaMongoServer()
 
 const app = express()
@@ -19,6 +19,14 @@ app.use(express.json()) // Iremos Fazer o PARSE do JSON
 
 app.get('/', (req, res) => {
     res.json({ mensagem: 'API 100% funcional!', versao: '1.0.0' })
+})
+
+//Middleware do Express
+app.use(function(req, res, next){
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Headers','*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH')
+    next()
 })
 
 //Rotas relacionadas ao MongoDB

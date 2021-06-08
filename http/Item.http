@@ -2,12 +2,39 @@
 
 @baseUrl =http://localhost:4000
 
-@id =60bf8de0dfa60710b3c8ca0e
+@id =60bfd1069d78f3252d40c449
 
-###
+### FIND ALL
 GET {{baseUrl}}/items
 Content-Type: application/json
 
-###
-DELETE {{baseUrl}}/{{id}}
+### FIND BY ID
+GET  {{baseUrl}}/items/{{id}}
 Content-Type: application/json
+
+### FIND AND DELETE BY ID
+DELETE {{baseUrl}}/items/{{id}}
+Content-Type: application/json
+
+### INCLUI NOVA
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+    "x": "300041",
+    "descricao": "SEILA",
+    "quantidade": "1",
+    "locacao": "G01"
+}
+
+### ALTERA PELO ID
+PUT {{baseUrl}}/items
+Content-Type: application/json
+
+{
+    "_id": "60bfd1069d78f3252d40c449",
+    "x": "300041",
+    "descricao": "SEILAMEMO",
+    "quantidade": "1",
+    "locacao": "G01"
+}

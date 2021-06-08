@@ -63,40 +63,39 @@ async (req, res) => {
         }
     })
 
+    
+    router.put('/', validaLocacao,
+    async(req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()){
+            return res.status(400).json({
+                errors: errors.array()
+            })
+        }
+        let dados = req.body
+        await Locacao.findByIdAndUpdate(req.body._id, {
+            $set: dados
+        },{new: true})
+        .then(locacao => {
+            res.send({message: `Locacao ${locacao.codigo} alterada com sucesso!`})
+    }).catch(err => {
+        return res.status(500).send({
+            errors: [{
+                message:`Não foi possível alterar a locacao com o id ${req.body._id}`}]
+            })
+        })
+    })
+    
     //Remove um documento espeficicado pelo id
     router.delete("/:id", async (req, res) => {
         await Locacao.findByIdAndRemove(req.params.id)
             .then(locacao => {
-                res.send({ message: `Locacao ${locacao.titulo} removido com sucesso!` })
+                res.send({ message: `Locacao ${locacao.codigo} removido com sucesso!` })
             }).catch(error => {
                 return res.status(500).send({
                     errors: [{ message: `Nao foi possivel remover a locacao com o id ${req.params.id}` }]
                 })
             })
     })
-
-    router.put('/', validaLocacao,
-async(req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()){
-        return res.status(400).json({
-            errors: errors.array()
-        })
-    }
-    let dados = req.body
-    await Locacao.findByIdAndUpdate(req.body._id, {
-        $set: dados
-    },{new: true})
-    .then(locacao => {
-        res.send({message: `Locacao ${locacao.nome} alterada com sucesso!`})
-    }).catch(err => {
-        return res.status(500).send({
-            errors: [{
-        message:`Não foi possível alterar a locacao com o id ${req.body._id}`}]
-        })
-    })
-})
-
-
-
+    
     module.exports = router

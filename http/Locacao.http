@@ -1,0 +1,17 @@
+//Teste requisições REST - Livros
+
+@baseUrl =http://localhost:4000
+
+@id =
+
+###
+GET {{baseUrl}}/locacao
+Content-Type: application/json
+
+###
+GET  {{baseUrl}}/locacao/{{id}}
+Content-Type: application/json
+
+###
+DELETE {{baseUrl}}/locacao/{{id}}
+Content-Type: application/json

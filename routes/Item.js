@@ -52,7 +52,7 @@ async (req, res) => {
         const { x } = req.body
         let item = await Item.findOne({ x })
         if (item)
-        return res.status(200).json({ errors: [{ message: 'Já existe uma item com o x informado!' }] })
+        return res.status(200).json({ errors: [{ message: 'Já existe um item com o x informado!' }] })
         try {
             let item = new Item(req.body)
             await item.save()
@@ -64,24 +64,13 @@ async (req, res) => {
         }
     })
 
-    //Remove um documento espeficicado pelo id
-    router.delete("/:id", async (req, res) => {
-        await Item.findByIdAndRemove(req.params.id)
-            .then(item => {
-                res.send({ message: `Item ${item.titulo} removido com sucesso!` })
-            }).catch(error => {
-                return res.status(500).send({
-                    errors: [{ message: `Nao foi possivel remover a item com o id ${req.params.id}` }]
-                })
-            })
-    })
-
+    //Altera um documento
     router.put('/', validaItem,
-async(req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()){
-        return res.status(400).json({
-            errors: errors.array()
+    async(req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()){
+            return res.status(400).json({
+                errors: errors.array()
         })
     }
     let dados = req.body
@@ -89,14 +78,25 @@ async(req, res) => {
         $set: dados
     },{new: true})
     .then(item => {
-        res.send({message: `Item ${item.nome} alterada com sucesso!`})
+        res.send({message: `Item X-${item.x} alterado com sucesso!`})
     }).catch(err => {
         return res.status(500).send({
             errors: [{
-        message:`Não foi possível alterar a item com o id ${req.body._id}`}]
-        })
+                message:`Não foi possível alterar o item com o id ${req.body._id}`}]
+            })
     })
 })
 
+//Remove um documento espeficicado pelo id
+router.delete("/:id", async (req, res) => {
+    await Item.findByIdAndRemove(req.params.id)
+        .then(item => {
+            res.send({ message: `Item X-${item.x} removido com sucesso!` })
+        }).catch(error => {
+            return res.status(500).send({
+                errors: [{ message: `Nao foi possivel remover a item com o id ${req.params.id}` }]
+            })
+        })
+})
 
 module.exports = router
