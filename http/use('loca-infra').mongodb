@@ -1,0 +1,8 @@
+use('loca-infra')
+
+db.items.insertOne({
+  "x": "300040",
+  "descricao": "kit teclado e mouse wired 600",
+  "quantidade": "5",
+  "locacao": "QA05"
+})

@@ -2,6 +2,16 @@
 const express = require('express')
 const router = express.Router()
 const Item = require('../model/Item')
+const { check, validationResult } = require('express-validator')
+
+const validaItem = [
+    check('x', 'Codigo X é obrigatorio!').notEmpty(),
+    check('descricao', 'Descricao é obrigatoria e deve ser maior que 5 digitos!').isLength({ min: 5 }),
+    check('quantidade', 'Quantidade é obrigatoria!').notEmpty(),
+    check('quantidade', 'Quantidade deve ser um numero inteiro!').isInt(),
+    check('locacao', 'Locacao é obrigatoria!').notEmpty(),
+    check('locacao', 'Locacao deve conter apenas Letras e Numeros').isAlphanumeric()
+]
 
 
 router.get("/", async (req, res) => {

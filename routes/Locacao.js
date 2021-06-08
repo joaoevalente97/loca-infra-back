@@ -2,6 +2,14 @@
 const express = require('express')
 const router = express.Router()
 const Locacao = require('../model/Locacao')
+const { check, validationResult} = require('express-validator')
+
+const validaLocacao = [
+    check('codigo', 'Codigo é obrigatorio!').notEmpty(),
+    check('codigo', 'codigo deve conter apenas Letras e Numeros').isAlphanumeric(),
+    check('container', 'Container é obrigatorio e deve ser maior que 5 digitos!').isLength({ min: 5 }),
+    check('instalacao', 'Instalacao é obrigatoria e deve ser maior que 5 digitos!').isLength({ min: 5 }),
+]
 
 
 router.get("/", async (req, res) => {
