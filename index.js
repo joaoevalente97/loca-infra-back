@@ -17,17 +17,18 @@ const PORT = process.env.PORT
 
 app.use(express.json()) // Iremos Fazer o PARSE do JSON
 
-app.get('/', (req, res)=> {
-    res.json({mensagem: 'API 100% funcional!', versao: '1.0.0'})
+app.get('/', (req, res) => {
+    res.json({ mensagem: 'API 100% funcional!', versao: '1.0.0' })
 })
 
 //Rotas relacionadas ao MongoDB
 app.use('/items', rotasItem)
 app.use('/locacao', rotasLocacao)
 
+
 //Rota para tratar erros 404
-app.use(function(req, res) {
-    res.status(404).json({mensagem: `A rota ${req.originalUrl} informada não existe! 🤕`})
+app.use(function (req, res) {
+    res.status(404).json({ mensagem: `A rota ${req.originalUrl} informada não existe! 🤕` })
 })
 
 app.listen(PORT, (req, res) => {

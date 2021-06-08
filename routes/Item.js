@@ -13,7 +13,7 @@ const validaItem = [
     check('locacao', 'Locacao deve conter apenas Letras e Numeros').isAlphanumeric()
 ]
 
-
+//Retorna todos os documentos na collection
 router.get("/", async (req, res) => {
     try {
         const items = await Item.find()
@@ -25,30 +25,78 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:id", async (req, res) => {
+//Retorna um documento especificado pelo id
+router.get('/:id', async (req, res) => {
     try {
         const item = await Item.findById(req.params.id)
         res.json(item)
     } catch (e) {
         res.status(500).send({
             errors: [{
-                message: `Não foi possível obter o item com o id ${req.params.id}`
+                message: `Não foi possível obter a item com o id ${req.params.id}`
             }]
         })
     }
 })
 
-router.delete("/:id", async (req, res) => {
-    await Item.findByIdAndRemove(req.params.id)
-        .then(item => {
-            res.send({ message: `Item ${item.titulo} removido com sucesso!` })
-        }).catch(error => {
-            return res.status(500).send({
-                errors: [{ message: `Nao foi possivel remover o item com o id ${req.params.id}` }]
+//Inclui um novo documento
+router.post('/', validaItem,
+async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
             })
+        }
+        //Verifica se o documento já existe
+        const { x } = req.body
+        let item = await Item.findOne({ x })
+        if (item)
+        return res.status(200).json({ errors: [{ message: 'Já existe uma item com o x informado!' }] })
+        try {
+            let item = new Item(req.body)
+            await item.save()
+            res.send(item)
+        } catch (err) {
+            return res.status(500).json({
+                errors: [{ message: `Erro ao salvar a item: ${err.message}` }]
+            })
+        }
+    })
+
+    //Remove um documento espeficicado pelo id
+    router.delete("/:id", async (req, res) => {
+        await Item.findByIdAndRemove(req.params.id)
+            .then(item => {
+                res.send({ message: `Item ${item.titulo} removido com sucesso!` })
+            }).catch(error => {
+                return res.status(500).send({
+                    errors: [{ message: `Nao foi possivel remover a item com o id ${req.params.id}` }]
+                })
+            })
+    })
+
+    router.put('/', validaItem,
+async(req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.status(400).json({
+            errors: errors.array()
         })
+    }
+    let dados = req.body
+    await Item.findByIdAndUpdate(req.body._id, {
+        $set: dados
+    },{new: true})
+    .then(item => {
+        res.send({message: `Item ${item.nome} alterada com sucesso!`})
+    }).catch(err => {
+        return res.status(500).send({
+            errors: [{
+        message:`Não foi possível alterar a item com o id ${req.body._id}`}]
+        })
+    })
 })
 
-router.post()
 
 module.exports = router

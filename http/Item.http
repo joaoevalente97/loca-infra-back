@@ -1,11 +1,11 @@
 //Teste requisições REST - Livros
 
-@baseUrl = http://localhost:4000/items
+@baseUrl =http://localhost:4000
 
-@id = 
+@id =60bf8de0dfa60710b3c8ca0e
 
 ###
-GET {{baseUrl}}
+GET {{baseUrl}}/items
 Content-Type: application/json
 
 ###
