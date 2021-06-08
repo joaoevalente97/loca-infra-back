@@ -1,0 +1,26 @@
+{
+  "name": "loca-infra-back",
+  "version": "1.0.0",
+  "description": "Projeto backend desenvolvido em NodeJS e integrado ao MongoDB destinado a cadastar e organizar um estoque de itens de infraestrutura em prateleiras denominadas locações",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loca-infra-back.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "MongoDB",
+    "Backend"
+  ],
+  "author": "João \"O tratante\" Valente",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "mongoose": "^5.12.13"
+  }
+}
