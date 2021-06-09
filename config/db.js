@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const MONGOURI = process.env.MONGODB_URL
+const MONGOURI = process.env.DATABASE_URL
 
 const InicializaMongoServer = async() => {
     try{
