@@ -1,6 +1,6 @@
 {
   "name": "loca-infra-back",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Projeto backend desenvolvido em NodeJS e integrado ao MongoDB destinado a cadastar e organizar um estoque de itens de infraestrutura em prateleiras denominadas locações",
   "main": "index.js",
   "scripts": {
